@@ -53,6 +53,7 @@ export default class App extends React.Component<{}, IState> {
             src={this.state.picture}
             width="30%"
             height="30%"
+            alt="Picture of cat"
           />
           <button className="kittyButton" onClick={this.requestPictureAxios}>
             Press me!
