@@ -1,26 +1,64 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import "./App.css";
+import axios from "axios";
 
-const App: React.FC = () => {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+interface IState {
+  picture: string;
 }
 
-export default App;
+export default class App extends React.Component<{}, IState> {
+  state = {
+    picture: ""
+  };
+
+  componentDidMount() {
+    this.requestPictureFetch();
+    //this.requestPictureAxios();
+  }
+
+  requestPictureAxios = (): void => {
+    axios
+      .get("https://aws.random.cat/meow")
+      .then(response => {
+        return response.data;
+      })
+      .then(data => {
+        this.setState({ picture: data.file });
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  };
+
+  requestPictureFetch = (): void => {
+    fetch("https://aws.random.cat/meow")
+      .then(response => {
+        return response.json();
+      })
+      .then(jsonObj => {
+        this.setState({ picture: jsonObj.file });
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  };
+
+  render() {
+    return (
+      <div className="App">
+        <header className="container">
+          <h1>Pretty Litty Kitty</h1>
+          <img
+            className="bodyImage"
+            src={this.state.picture}
+            width="30%"
+            height="30%"
+          />
+          <button className="kittyButton" onClick={this.requestPictureAxios}>
+            Press me!
+          </button>
+        </header>
+      </div>
+    );
+  }
+}
