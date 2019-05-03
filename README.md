@@ -6,7 +6,10 @@ Code was bootstrapped via Create-react-app with TypeScript and still follows the
 
 ## Available Scripts
 
+
 In the project directory, you can run:
+
+Dont forget to NPM install your node modules otherwise these scripts wont actually work.
 
 ### `npm start`
 
